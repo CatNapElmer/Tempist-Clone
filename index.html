@@ -3,7 +3,43 @@
 <head>
   <meta charset="utf-8" />
   <title>Tempist-Clone</title><!DOCTYPE html>
+<html><!DOCTYPE html>
 <html>
+<head>
+  <meta charset="utf-8" />
+  <title>Tempist-Clone</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    html,body { margin:0; background:#111; color:#eee; font-family:system-ui; }
+    h1, p { text-align:center; }
+    canvas { display:block; margin:12px auto 24px; border:1px solid #444; border-radius:8px; }
+    .hint { opacity:.65; margin-top:-10px; font-size:14px }
+    body:focus { outline: 0; } /* still focusable but no visible outline */
+  </style>
+</head>
+<body tabindex="0">
+  <h1>Tempist-Clone</h1>
+  <p class="hint">Click the page once to focus, then use ◀︎/▶︎ or A/D to move the claw.</p>
+  <canvas id="game" width="640" height="480"></canvas>
+
+  <script>
+    const c = document.getElementById('game');
+    const ctx = c.getContext('2d');
+
+    // Web parameters
+    const LANES = 12, RINGS = 6, OUTER_R = 200, SHRINK = 0.72;
+    const CX = c.width/2, CY = c.height/2 + 30, TAU = Math.PI*2;
+
+    // Claw parameters
+    const CLAW_WIDTH = 0.35;   // fraction of a lane
+    const CLAW_INSET = 28;     // px inward from rim
+    const EASE = 0.22;         // smoothing toward target
+
+    // Precompute ring radii
+    const radii = []; { let r = OUTER_R; for (let i=0;i<RINGS;i++){ radii.push(r); r *= SHRINK; } }
+    const laneAngle = k => (k/LANES)*TAU - Math.PI/2;
+    const posAt = (a,r) => [CX + Math.c]()
+
 <head>
   <meta charset="utf-8" />
   <title>Tempist-Clone</title>
