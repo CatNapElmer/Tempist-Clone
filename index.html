@@ -1,9 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html><!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>Tempist-Clone</title><!DOCTYPE html>
-<html><!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
@@ -11,14 +6,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     html,body { margin:0; background:#111; color:#eee; font-family:system-ui; }
-    h1, p { text-align:center; }
+    h1, .ver, .hint { text-align:center; }
     canvas { display:block; margin:12px auto 24px; border:1px solid #444; border-radius:8px; }
-    .hint { opacity:.65; margin-top:-10px; font-size:14px }
-    body:focus { outline: 0; } /* still focusable but no visible outline */
+    .ver { font-size:12px; opacity:.6; margin-top:-6px }
+    .hint { opacity:.65; font-size:14px; margin-top:-6px; text-decoration:none; }
+    body:focus { outline:0; }
   </style>
 </head>
 <body tabindex="0">
   <h1>Tempist-Clone</h1>
+  <div class="ver">version: <strong>clean v4 (no buttons)</strong></div>
   <p class="hint">Click the page once to focus, then use ◀︎/▶︎ or A/D to move the claw.</p>
   <canvas id="game" width="640" height="480"></canvas>
 
@@ -38,205 +35,80 @@
     // Precompute ring radii
     const radii = []; { let r = OUTER_R; for (let i=0;i<RINGS;i++){ radii.push(r); r *= SHRINK; } }
     const laneAngle = k => (k/LANES)*TAU - Math.PI/2;
-    const posAt = (a,r) => [CX + Math.c]()
+    const posAt = (a,r) => [CX + Math.cos(a)*r, CY + Math.sin(a)*r];
 
-<head>
-  <meta charset="utf-8" />
-  <title>Tempist-Clone</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    html,body { margin:0; background:#111; color:#eee; font-family:system-ui; }
-    h1, p { text-align:center; }
-    canvas { display:block; margin:12px auto 8px; border:1px solid #444; border-radius:8px; }
-    .hint { opacity:.75; margin-top:4px }
-    .controls { display:flex; gap:12px; justify-content:center; margin:8px 0 8px; }
-    .btn { padding:8px 14px; border:1px solid #555; background:#222; color:#eee; border-radius:10px; cursor:pointer; }
-    .status { text-align:center; font-size:14px; opacity:.8; min-height:1.2em }
-    body:focus { outline: 2px dashed #0ff; outline-offset: 4px; }
-    .ver { text-align:center; font-size:12px; opacity:.6; margin-bottom:8px }
-  </style>
-</head>
-<body tabindex="0">
-  <h1>Tempist-Clone</h1>
-  <div c
+    // Player state
+    let curT = 0, targetT = 0;
 
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    html,body { margin:0; background:#111; color:#eee; font-family:system-ui; }
-    h1, p { text-align:center; }
-    canvas { display:block; margin:12px auto 8px; border:1px solid #444; border-radius:8px; }
-    .hint { opacity:.75; margin-top:4px }
-    .controls { display:flex; gap:12px; justify-content:center; margin:8px 0 20px; }
-    .btn { padding:8px 14px; border:1px solid #555; background:#222; color:#eee; border-radius:10px; cursor:pointer; }
-    .status { text-align:center; font-size:14px; opacity:.8; min-height:1.2em }
-    /* make page focusable so it can receive keys */
-    body:focus { outline: 2px dashed #0ff; outline-offset: 4px; }
-  </style>
-</head>
-<body tabindex="0">
-  <h1>Tempist-Clone</h1>
-  <p class="hint">Click anywhere on the page to focus, then use ◀︎/▶︎ or A/D to move the claw. You can also tap the buttons.</p>
-  <div class="status" id="status">Keys: (none)</div>
-  <div class="controls">
-    <button class="btn" id="leftBtn">◀︎ Left</button>
-    <button class="btn" id="rightBtn">Right ▶︎</button>
-  </div>
-  <canvas id="game" width="640" height="480"></canvas>
-
-  <s
-
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>Tempist-Clone</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    html,body { margin:0; background:#111; color:#eee; font-family:system-ui; }
-    h1, p { text-align:center; }
-    canvas { display:block; margin:12px auto 24px; border:1px solid #444; border-radius:8px; }
-    .hint { opacity:.75; margin-top:-6px }
-  </style>
-</head>
-<body>
-  <h1>Tempist-Clone</h1>
-  <p class="hint">Use ◀︎ / ▶︎ (or A / D) to slide the claw around the rim</p>
-  <canvas id="game" width="640" height="480"></canvas>
-
-  <script>
-    const c = document.getElementById('game');
-    const ctx = c.getContext('2d');
-
-    // ---- Tweakables ----
-    const LANES = 12;          // number of slices in the web
-    const RINGS = 6;           // number of depth steps
-    const OUTER_R = 200;       // rim radius (px)
-    const SHRINK = 0.72;       // how quickly rings shrink toward the center
-    const CLAW_WIDTH = 0.35;   // portion of a lane the claw spans (0..1)
-    const CLAW_INSET = 28;     // how far the claw tip sits inside the rim (px)
-    const EASE = 0.18;         // slide smoothing (0..1)
-
-    const CX = c.width/2;
-    const CY = c.height/2 + 30; // a little lower to fake perspective
-    const TAU = Math.PI*2;
-
-    // Precompute ring radii
-    const radii = [];
-    let r = OUTER_R;
-    for (let i = 0; i < RINGS; i++) { radii.push(r); r *= SHRINK; }
-
-    function laneAngle(k){ return (k/LANES)*TAU - Math.PI/2; }   // start at top
-    function posAt(angle, radius){ return [CX + Math.cos(angle)*radius, CY + Math.sin(angle)*radius]; }
-
-    // ----- Player (claw) -----
-    let curT = 0;     // continuous lane position (can be any number)
-    let targetT = 0;  // target lane position (increments/decrements by 1)
+    // Ensure page gets focus so key events fire
+    const ensureFocus = () => { if (document.activeElement !== document.body) document.body.focus(); };
+    addEventListener('pointerdown', ensureFocus, {passive:true});
+    addEventListener('load', ensureFocus);
 
     // Keyboard controls
-    const pressed = new Set();
-    addEventListener('keydown', (e) => {
-      if (['ArrowLeft','a','A'].includes(e.key)) { e.preventDefault(); targetT -= 1; }
-      if (['ArrowRight','d','D'].includes(e.key)) { e.preventDefault(); targetT += 1; }
-      pressed.add(e.key);
-    }, {passive:false});
-    addEventListener('keyup', (e) => pressed.delete(e.key));
+    document.addEventListener('keydown', (e)=>{
+      const k = e.key;
+      if (k === 'ArrowLeft' || k === 'a' || k === 'A'){ e.preventDefault(); targetT -= 1; }
+      if (k === 'ArrowRight' || k === 'd' || k === 'D'){ e.preventDefault(); targetT += 1; }
+    });
 
-    // ----- Draw web -----
     function drawWeb(){
+      // solid clear (nothing leftover underneath)
+      ctx.fillStyle = '#111';
+      ctx.fillRect(0,0,c.width,c.height);
+
       ctx.lineWidth = 2;
       ctx.strokeStyle = '#0ff';
-      ctx.clearRect(0,0,c.width,c.height);
 
-      // Rings (concentric polygons)
+      // Rings
       ctx.globalAlpha = 0.85;
-      for (const rad of radii){
+      for (const r of radii){
         ctx.beginPath();
         for (let k=0;k<LANES;k++){
           const a = laneAngle(k);
-          const [x,y] = posAt(a, rad);
+          const [x,y] = posAt(a, r);
           k===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
         }
         ctx.closePath();
         ctx.stroke();
       }
 
-      // Radials (lane lines)
+      // Radials
       ctx.globalAlpha = 1;
       const inner = radii[radii.length-1];
       for (let k=0;k<LANES;k++){
         const a = laneAngle(k);
         const [x0,y0] = posAt(a, OUTER_R);
         const [x1,y1] = posAt(a, inner);
-        ctx.beginPath();
-        ctx.moveTo(x0,y0); ctx.lineTo(x1,y1); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y1); ctx.stroke();
       }
     }
 
-    // ----- Draw claw at a given fractional lane position -----
     function drawClaw(t){
-      // Map continuous t to [0, LANES) for angle, but keep t continuous for smooth wrap
       const frac = ((t % LANES) + LANES) % LANES;
-      const aCenter = laneAngle(frac);
+      const aC = laneAngle(frac);
+      const span = (TAU / LANES) * CLAW_WIDTH;
+      const aL = aC - span, aR = aC + span;
 
-      // Claw triangle points (base on rim, tip inset toward center)
-      const span = (TAU / LANES) * CLAW_WIDTH;      // angular half-width of the claw base
-      const aL = aCenter - span;
-      const aR = aCenter + span;
+      const [bx1,by1] = posAt(aL, OUTER_R + 3);
+      const [bx2,by2] = posAt(aR, OUTER_R + 3);
+      const [tx, ty ] = posAt(aC, OUTER_R - CLAW_INSET);
 
-      const [bx1, by1] = posAt(aL, OUTER_R + 3);    // small +3 to sit on top of the rim
-      const [bx2, by2] = posAt(aR, OUTER_R + 3);
-      const [tx,  ty ] = posAt(aCenter, OUTER_R - CLAW_INSET);
-
-      // Glow/backplate
       ctx.save();
-      ctx.shadowColor = '#0ff';
-      ctx.shadowBlur = 8;
-
-      ctx.beginPath();
-      ctx.moveTo(bx1, by1);
-      ctx.lineTo(bx2, by2);
-      ctx.lineTo(tx, ty);
-      ctx.closePath();
-      ctx.fillStyle = '#0ff';
-      ctx.fill();
-
-      // Outline for crispness
-      ctx.shadowBlur = 0;
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = '#033';
-      ctx.stroke();
-
+      ctx.shadowColor = '#0ff'; ctx.shadowBlur = 8;
+      ctx.beginPath(); ctx.moveTo(bx1,by1); ctx.lineTo(bx2,by2); ctx.lineTo(tx,ty); ctx.closePath();
+      ctx.fillStyle = '#0ff'; ctx.fill();
+      ctx.shadowBlur = 0; ctx.lineWidth = 2; ctx.strokeStyle = '#033'; ctx.stroke();
       ctx.restore();
     }
 
-    // ----- Main loop -----
     function loop(){
-      // Smoothly move curT toward targetT (handles wrap automatically)
       curT += (targetT - curT) * EASE;
-
       drawWeb();
       drawClaw(curT);
-
       requestAnimationFrame(loop);
     }
     loop();
-  </script>
-</body>
-</html>
-
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Tempist-Clone</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-</head>
-<body style="background:#111; color:#eee; text-align:center; font-family:system-ui;">
-  <h1>Tempist-Clone</h1>
-  <p>If you see the cyan box, the page works.</p>
-  <canvas id="game" width="400" height="300" style="border:1px solid #888;"></canvas>
-  <script>
-    const ctx = document.getElementById('game').getContext('2d');
-    ctx.fillStyle = 'cyan';
-    ctx.fillRect(150, 120, 100, 60); // proof-of-life box
   </script>
 </body>
 </html>
