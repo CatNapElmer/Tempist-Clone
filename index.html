@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Tempist-Clone</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+</head>
+<body style="background:#111; color:#eee; text-align:center; font-family:system-ui;">
+  <h1>Tempist-Clone</h1>
+  <p>If you see the cyan box, the page works.</p>
+  <canvas id="game" width="400" height="300" style="border:1px solid #888;"></canvas>
+  <script>
+    const ctx = document.getElementById('game').getContext('2d');
+    ctx.fillStyle = 'cyan';
+    ctx.fillRect(150, 120, 100, 60); // proof-of-life box
+  </script>
+</body>
+</html>
